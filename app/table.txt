@@ -1,0 +1,146 @@
+/* UPBIT TICKER */
+CREATE TABLE TICKER (    
+    market VARCHAR(1000),
+	trade_date VARCHAR(1000),
+	trade_time VARCHAR(1000),
+	trade_date_kst VARCHAR(1000),
+	trade_time_kst VARCHAR(1000),
+	opening_price double,
+	high_price double,
+	low_price double,
+	trade_price double,
+	prev_closing_price double,
+	change VARCHAR(1000),
+	change_price double,
+	change_rate double,
+	signed_change_price double,
+	signed_change_rate double,
+	trade_volume double,
+	acc_trade_price double,
+	acc_trade_price_24h double,
+	acc_trade_volume double,
+	acc_trade_volume_24h double,
+	highest_52_week_price double,
+	highest_52_week_date VARCHAR(1000),
+	lowest_52_week_price double,
+	lowest_52_week_date VARCHAR(1000),
+	reg_date TIMESTAMP
+) default character set utf8 collate utf8_general_ci;
+
+
+insert into MAIN_SWIPER_IMG(대상) values(값);
+
+/* 메인 카테고리 */
+CREATE TABLE MAIN_CATEGORY (    
+  url      	   VARCHAR(1000) comment '이미지 주소'
+ ,name     	   VARCHAR(100)  comment '이름'  
+) default character set utf8 collate utf8_general_ci;
+
+/* 메인 발매상품 */
+CREATE TABLE MAIN_JUST (    
+  url      	   VARCHAR(1000) comment '이미지 주소'
+ ,brand    	   VARCHAR(100)  comment '상표'
+ ,name     	   VARCHAR(100)  comment '이름'
+ ,price    	   INT 			 comment '가격'  
+) default character set utf8 collate utf8_general_ci;
+
+/* 메인 추천브랜드 */
+CREATE TABLE MAIN_BEST_BRAND (    
+  url      	   VARCHAR(1000) comment '이미지 주소'
+ ,name     	   VARCHAR(100)  comment '이름'  
+) default character set utf8 collate utf8_general_ci;
+
+/* FILE 관리 테이블 */
+CREATE TABLE FILES (  
+  uuid  VARCHAR(36) PRIMARY KEY not null,  
+  real_name VARCHAR(1000) not null default '',
+  extend_name VARCHAR(1000) not null default '',
+  file_name VARCHAR(1000) not null default '',         
+  size INT not null default 0,   
+  reg_date TIMESTAMP
+);
+
+/* ################ UPBIT START  ################ */
+/* 계정 */
+CREATE TABLE UPBIT_USER (  
+  access_key  VARCHAR(1000) PRIMARY KEY not null,  
+  secret_key  VARCHAR(1000) not null default '',
+  img_url     VARCHAR(1000),
+  name        VARCHAR(1000) not null default '',
+  status_code VARCHAR(1) not null default '',
+  run_code    VARCHAR(1) not null default '',           
+  reg_date TIMESTAMP
+);
+
+/* 마켓정보 */
+CREATE TABLE UPBIT_MARKET (  
+  market        VARCHAR(100) not null,  
+  cal_cnt       INT not null default 0, 
+  korean_name   VARCHAR(100) not null default '',
+  trade_price_s INT not null default 0, 
+  trade_price_e INT not null default 0, 
+  raiseRate     DOUBLE not null default 0,
+  raisePrice    INT not null default 0,
+  buyed         VARCHAR(1),
+  reg_date      TIMESTAMP,
+  PRIMARY KEY (market, cal_cnt)
+);
+
+/* 마켓정보 안삭제 */
+CREATE TABLE UPBIT_MARKET_FOREVER (  
+  market        VARCHAR(100) not null,  
+  trade_price_e INT not null default 0, 
+  reg_date      TIMESTAMP
+);
+
+/* 분석결과 */
+CREATE TABLE UPBIT_MAIN (  
+  market           VARCHAR(100) not null,  
+  english_name     VARCHAR(100) not null default '',
+  korean_name      VARCHAR(100) not null default '',
+  win              INT not null default 0,
+  cal_cnt          INT not null default 0,
+  start_price      INT not null default 0, 
+  trade_price      INT not null default 0, 
+  raiseRateTotal   DOUBLE not null default 0,
+  raisePriceTotal  INT not null default 0,
+  reg_date         TIMESTAMP,
+  PRIMARY KEY (market)
+);
+
+/* 구매내역 */
+CREATE TABLE UPBIT_ORDER (  
+  uuid             VARCHAR(1000) not null,  
+  market           VARCHAR(100) not null, 
+  side             VARCHAR(100) not null,  
+  price            VARCHAR(100) not null,
+  buyed_price      INT not null default 0,
+  buyed_total      INT not null default 0,
+  saled_price      INT not null default 0,
+  saled_total      INT not null default 0,
+  ord_type         VARCHAR(100) not null,    
+  state            VARCHAR(100) not null,  
+  volume           VARCHAR(100),  
+  reserved_fee     VARCHAR(100),  
+  remaining_fee    VARCHAR(100),  
+  paid_fee         VARCHAR(100),  
+  locked           VARCHAR(100),
+  executed_volume  VARCHAR(100),
+  access_key  	   VARCHAR(1000) ,  
+  secret_key  	   VARCHAR(1000) ,
+  name        	   VARCHAR(1000) ,
+  buyed        	   VARCHAR(1) ,
+  reg_date         TIMESTAMP,
+  PRIMARY KEY (uuid)
+);
+
+/* 수익률 */
+CREATE TABLE UPBIT_RATELOG (  
+  market          VARCHAR(100) not null, 
+  ymd             VARCHAR(8) not null,
+  canum           INT,  
+  calnum          INT,
+  win             INT,  
+  price           INT,      
+  reg_date        TIMESTAMP
+);
